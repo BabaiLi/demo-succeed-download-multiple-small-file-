@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Downloader</title>
+    <script>
+        async function pandaClick() {
+            const elements = document.querySelectorAll('[id^="checkbox"]');
+            elements.forEach(async (e) => {
+                if (e.checked) {
+                    const file = e.value;
+                    const a = document.createElement('a');
+                    a.href = `files/${file}`;
+                    a.download = file;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+                await new Promise(resolve => setTimeout(resolve, 200));
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Files</h1>
+    <ul id="file-list"></ul>
+    <button id="download-button" onclick="pandaClick()">Download</button>
+    <script>
+        const panda = document.getElementById("file-list");
+        for (let i = 1; i <= 30; i++) {
+            panda.insertAdjacentHTML(`beforeend`, `
+              <li><input type="checkbox" id="checkbox${i}" value="file${i}.ext">file${i}.ext</li>
+            `);
+        }
+    </script>
+</body>
+</html>
